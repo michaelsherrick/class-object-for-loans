@@ -1,47 +1,77 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Aug 15 16:38:26 2021
+#!/usr/bin/env python
+# coding: utf-8
 
-@author: 16617
-Interest rate problem
-given 2 o 3, solve for the last one
-"""
+# In[52]:
+
 
 class loan(object):
     def __init__(self, name):
-        self._name= name
+        self._name = name
         
     def who(self):
         print(self._name)
-        
+    
     def setPV(self, PV):
         self._PV = PV
-        print('present value = ', self._PV)
+        print("Present Value = ", self._PV)
         
     def setRate(self, ratePct):
-        #set interest, apr
         self._ratePct = ratePct
-        print('APR = ', self._ratePct,'%')
-        
+        print("Rate = {:.2f}%".format(self._ratePct))
+            
     def setMonths(self, months):
         self._months = months
-        print(self._months, 'months')
+        print(self._months, "Months")
         
     def computePmt(self):
-        # formula: pmt = PV*(r*(1+r)**n)/((1+r)**months -1)
         r = self._ratePct/100/12
-        self._Pmt = self._PV*(r*(1+r)**self._months)/((1+r)**self._months-1)
-        print('payment = $', round(self._Pmt,2))
+        self._Pmt = self._PV * (r * (1 + r)**self._months) / ((1 + r)**self._months - 1)
+        print("Payment = ${:.2f}".format(self._Pmt))
         return self._Pmt
+    
+    def computeRate(self, Pmt, PV, months, acc):
+        self._topR = 100
+        self._botR = 0
+        self.setPV(PV)
+        self.setMonths(months)
+        
+        while(True):
+            self._currRate = (self._topR + self._botR) / 2
+            self.setRate(self._currRate)
+            self._currPmt = self.computePmt()
+            if(abs(self._currPmt - Pmt) < 1*10**-acc):
+                self._currRate = round(self._currRate, acc)
+                print("Rate = {:.2f}%".format(self._currRate))
+                return self._currRate
+            elif(self._currPmt > Pmt):
+                self._topR = self._currRate
+            else:
+                self._botR = self._currRate
 
-if __name__ == "__main__":
-    loan1 = loan('Dr J')
-    loan1.who()
 
-    loan1.setPV(27150)  #mini cooper
-    loan1.setRate(1.9)
-    loan1.setMonths(42)
-    payment = loan1.computePmt()
+# In[53]:
 
 
-   
+loan_test = loan("Jim")
+
+
+# In[54]:
+
+
+loan_test.setPV(10000)
+loan_test.setRate(5)
+loan_test.setMonths(48)
+loan_test.computePmt()
+
+
+# In[56]:
+
+
+loan_test.computeRate(Pmt=230.29, PV=10000, months=48, acc=2)
+
+
+# In[ ]:
+
+
+
+
