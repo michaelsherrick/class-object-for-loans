@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[52]:
+# In[1]:
 
 
 class loan(object):
@@ -49,13 +49,13 @@ class loan(object):
                 self._botR = self._currRate
 
 
-# In[53]:
+# In[2]:
 
 
 loan_test = loan("Jim")
 
 
-# In[54]:
+# In[3]:
 
 
 loan_test.setPV(10000)
@@ -64,10 +64,10 @@ loan_test.setMonths(48)
 loan_test.computePmt()
 
 
-# In[56]:
+# In[4]:
 
 
-loan_test.computeRate(Pmt=230.29, PV=10000, months=48, acc=2)
+loan_test.computeRate(Pmt=0.10, PV=1, months=12, acc=6)
 
 
 # In[ ]:
